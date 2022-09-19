@@ -25,7 +25,7 @@ Space Shark is a thrilling side scroller combining two of my favorite things: Sh
 - As a user, I want the ability to hear the music change to a different song when the game is won
 
 # Wireframes/Screenshots
-![Game 1 WireFrame 1](Wireframe1.png)
+![Game 1 WireFrame 1](/Users/joshdoyle/sei/projects/project-1-game/Game-Project-1/wireframes/Wireframe1.png)
 ![Game 1 Wireframe 2](Wireframe2.png)
 ![Game 1 Wireframe 3](Wireframe3.png)
 
