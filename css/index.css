@@ -6,7 +6,7 @@ body {
 }
 
 #container {
-    height: 800px;
+    height: 825px;
     width: 1200px;
     border: red solid;
     position: relative;
@@ -34,7 +34,7 @@ h1 {
     justify-content: center;
     text-align: center;
     align-content: center;
-    margin: auto;
+    margin: 0px 47px 1000px 47px;
     background-color: lightblue;
 }
 
@@ -48,6 +48,22 @@ h1 {
     text-align: center;
     align-content: center;
     margin: 0 0 0 47px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: lightseagreen
+}
+
+#game-start {
+    color: red;
+    border: red solid;
+    display: flex;
+    height: 55px;
+    width: 300px;
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+    margin: 0 0 0 400px;
     position: absolute;
     bottom: 0;
     left: 0;
