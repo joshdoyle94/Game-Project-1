@@ -1,0 +1,87 @@
+body {
+    background-color: green;
+    display: flex;
+    justify-content: center;
+
+}
+
+#container {
+    height: 800px;
+    width: 1200px;
+    border: red solid;
+    position: relative;
+    background-color: black;
+    color: black
+}
+
+#game-title {
+    border: red solid;
+    background-color: lightcoral;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+}
+
+#gameboard {
+    border: red solid;
+    height: 650px;
+    width: 1100px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+    margin: auto;
+    background-color: lightblue;
+}
+
+#start {
+    color: red;
+    border: red solid;
+    display: flex;
+    height: 55px;
+    width: 300px;
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+    margin: 0 0 0 47px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: lightseagreen
+}
+
+#score {
+    color: red;
+    border: red solid;
+    display: flex;
+    height: 55px;
+    width: 100px;
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+    margin: 0 300px 0 0;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: lightgreen
+}
+
+#high-score {
+    color: red;
+    border: red solid;
+    display: flex;
+    height: 55px;
+    width: 200px;
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+    margin: 0 47px 0 0;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: lightgoldenrodyellow
+}
