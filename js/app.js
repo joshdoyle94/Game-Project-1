@@ -29,7 +29,68 @@ console.log('game', game)
 game.setAttribute('width', getComputedStyle(game)['width'])
 game.setAttribute('height', getComputedStyle(game)['height'])
 
-class Character {
+class playerCharacter {
+    constructor(x, y, color, width, height) {
+        this.x = x,
+        this.y = y,
+        this.color = color,
+        this.width = width,
+        this.height = height,
+        this.alive = true,
+        this.speed = 15,
+        this.direction = {
+            up: false,
+            down: false,
+            left: false,
+            right: false
+        },
+        // we need two key based functions here that will change our heroes movement direction
+        this.setDirection = function (key) {
+            if (key.toLowerCase() == 'w') { this.direction.up = true }
+            if (key.toLowerCase() == 'a') { this.direction.left = true }
+            if (key.toLowerCase() == 's') { this.direction.down = true }
+            if (key.toLowerCase() == 'd') { this.direction.right = true }
+        },
+        this.unsetDirection = function (key) {
+            if (key.toLowerCase() == 'w') { this.direction.up = false }
+            if (key.toLowerCase() == 'a') { this.direction.left = false }
+            if (key.toLowerCase() == 's') { this.direction.down = false }
+            if (key.toLowerCase() == 'd') { this.direction.right = false }
+        },
+        this.moveShark = function () {
+            if (this.direction.up) {
+                this.y -= this.speed
+                if (this.y <= 0) {
+                    this.y = 0
+                }
+            }
+            if (this.direction.left) {
+                this.x -= this.speed
+                if (this.x <= 0) {
+                    this.x = 0
+                }
+            }
+            if (this.direction.down) {
+                this.y += this.speed
+                if (this.y + this.height >= game.height) {
+                    this.y = game.height - this.height
+                }
+            }
+            if (this.direction.right) {
+                this.x += this.speed
+                if (this.x + this.width >= game.width) {
+                    this.x = game.width - this.width
+                }
+            }
+        },
+        this.render = function () {
+            ctx.fillStyle = this.color
+            ctx.fillRect(this.x, this.y, this.width, this.height)
+        }
+    }
+}
+
+class enemyCharacter {
     constructor(x, y, color, width, height) {
         this.x = x,
         this.y = y,
@@ -45,49 +106,46 @@ class Character {
 }
 
 // create character objects
-const shark = new Character(100, 100, 'white', 75, 75)
-let alien = new Character(1500, 300, 'purple', 50, 50)
-let alien2 = new Character(1000, 100, 'purple', 50, 50)
-let alien3 = new Character(200, 480, 'purple', 50, 50)
-let asteroid = new Character(1500, 500, 'blue', 120, 120)
+const shark = new playerCharacter(100, 100, 'white', 75, 75)
+let alien = new enemyCharacter(1500, 300, 'purple', 50, 50)
+let alien2 = new enemyCharacter(1000, 100, 'purple', 50, 50)
+let alien3 = new enemyCharacter(200, 480, 'purple', 50, 50)
+let asteroid = new enemyCharacter(1500, 500, 'blue', 120, 120)
 
 
 //create movement function for player character
-const userMovementHandler = (key) => {
-    switch (key.keyCode) {
-        case(87):
-            shark.y -= 10
-            break
-        case(65):
-            shark.x -= 10
-            break
-        case(83):
-            shark.y += 10
-            break
-        case(68):
-            shark.x += 10
-            break
-    }
-}
+// const userMovementHandler = (key) => {
+//     switch (key.keyCode) {
+//         case(87):
+//             shark.y -= 10
+//             break
+//         case(65):
+//             shark.x -= 10
+//             break
+//         case(83):
+//             shark.y += 10
+//             break
+//         case(68):
+//             shark.x += 10
+//             break  
+//     }
+// }
 
-// alien automated movement
-const alienMovement = () => {
-    if (alien.alive) {
-        alien.x -= 50
-    }
-}
+document.addEventListener('keydown', (e) => {
+    shark.setDirection(e.key)
+})
 
-//alien2 automated movement
-const alien2Movement = () => {
-    if (alien2.alive) {
-        alien2.x -= 50
+document.addEventListener('keyup', (e) => {
+    if (['w','a','s','d'].includes(e.key)) {
+        shark.unsetDirection(e.key)
     }
-}
+})
 
-//alien3 automated movement
-const alien3Movement = () => {
-    if (alien3.alive) {
-        alien3.x -= 50
+
+// alien enemies automated movement
+const alienMovement = (alienEnemy) => {
+    if (alienEnemy.alive) {
+        alienEnemy.x -= 50
     }
 }
 
@@ -150,34 +208,12 @@ const asteroidRespawn = () => {
 }
 
 //detect alien object being hit
-const alienHitDetection = () => {
-    if(shark.x < alien.x + alien.width
-        && shark.x + shark.width > alien.x
-        && shark.y < alien.y + alien.height
-        && shark.y + shark.height > alien.y) {
-            alien.alive = false
-            message.textContent = 'Alien eaten!'
-            points.innerText = scorePoints() + 1
-        }
-}
-//alien2 hit detection
-const alien2HitDetection = () => {
-    if(shark.x < alien2.x + alien2.width
-        && shark.x + shark.width > alien2.x
-        && shark.y < alien2.y + alien2.height
-        && shark.y + shark.height > alien2.y) {
-            alien2.alive = false
-            message.textContent = 'Alien eaten!'
-            points.innerText = scorePoints() + 1
-        }
-}
-// alien3 hit detection
-const alien3HitDetection = () => {
-    if(shark.x < alien3.x + alien3.width
-        && shark.x + shark.width > alien3.x
-        && shark.y < alien3.y + alien3.height
-        && shark.y + shark.height > alien3.y) {
-            alien3.alive = false
+const alienHitDetection = (alienEnemy) => {
+    if(shark.x < alienEnemy.x + alienEnemy.width
+        && shark.x + shark.width > alienEnemy.x
+        && shark.y < alienEnemy.y + alienEnemy.height
+        && shark.y + shark.height > alienEnemy.y) {
+            alienEnemy.alive = false
             message.textContent = 'Alien eaten!'
             points.innerText = scorePoints() + 1
         }
@@ -197,20 +233,20 @@ const asteroidHitDetection = () => {
 
 const gameLoop = () => {
     if (alien.alive) {
-        alienHitDetection()
-        alienMovement()
+        alienHitDetection(alien)
+        alienMovement(alien)
         //alienRespawn()
     }
 
     if (alien2.alive) {
-        alien2HitDetection()
-        alien2Movement()
-        //alien2Respawn()
+        alienHitDetection(alien2)
+        alienMovement(alien2)
+       // alien2Respawn()
     }
 
     if (alien3.alive) {
-        alien3HitDetection()
-        alien3Movement()
+        alienHitDetection(alien3)
+        alienMovement(alien3)
         //alien3Respawn()
     }
 
@@ -224,6 +260,7 @@ const gameLoop = () => {
 
     movement.textContent = shark.x + ", " + shark.y
     shark.render()
+    shark.moveShark()
 
     if (alien.alive) {
         alien.render()
@@ -251,6 +288,6 @@ const gameLoop = () => {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    document.addEventListener('keydown', userMovementHandler)
+    // document.addEventListener('keydown', userMovementHandler)
     setInterval(gameLoop, 60)
 })
