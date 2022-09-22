@@ -13,9 +13,11 @@ const game = document.getElementById('canvas')
 const movement = document.getElementById('movement')
 const message = document.getElementById('status')
 const points = document.getElementById('points')
+const healthStatus = document.getElementById('health')
 
 // function to keep track of points (aliens eaten)
 const scorePoints = () => { return parseInt(points.innerText,10)}
+const decreaseHealth = () => { return parseInt(healthStatus.innerText, 10)}
 
 const ctx = game.getContext('2d')
 
@@ -137,8 +139,13 @@ const alien3Respawn = () => {
 
 // asteroid respawn movement
 const asteroidRespawn = () => {
-    if (asteroid.x < -300) {
+    if (asteroid.alive != true) {
+        asteroid.alive = true
         asteroid.x = 1500
+        asteroid.y = 500
+    }  else if (asteroid.x < -300) {
+        asteroid.x = 1500
+        asteroid.y = 500
     }
 }
 
@@ -182,8 +189,9 @@ const asteroidHitDetection = () => {
         && shark.x + shark.width > asteroid.x
         && shark.y < asteroid.y + asteroid.height
         && shark.y + shark.height > asteroid.y) {
-            shark.alive = false
-            message.textContent = 'Shark is dead!'
+            asteroid.alive = false
+            message.textContent = 'Shark has been hit'
+            healthStatus.innerText = decreaseHealth() - 20
         }
 }
 
@@ -232,6 +240,14 @@ const gameLoop = () => {
     if (asteroid.alive) {
         asteroid.render()
     }
+
+    // if (scorePoints() >= 5) {
+    //     alert('You have won the game!')
+    // }
+
+    // if (decreaseHealth() <= 0) {
+    //     alert('The shark has died from asteroid poisoing')
+    // }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
