@@ -1,6 +1,6 @@
 
 body {
-    background-color: black;
+    background-color: rgb(12, 0, 23);
     display: flex;
     justify-content: center;
 
@@ -24,8 +24,9 @@ body {
 }
 
 canvas {
-    background-color: black;
-    /* background-image: url('https://th.bing.com/th/id/R.98474d9f277570630c7f0b7b50412303?rik=hp%2foD8VTgmvD3Q&riu=http%3a%2f%2fwallup.net%2fwp-content%2fuploads%2f2016%2f01%2f15775-space-stars.jpg&ehk=jLpf9TXuHHVTEjoq56oqmlMDDASshwjhRUz%2f7qsS07E%3d&risl=&pid=ImgRaw&r=0'); */
+    /* background-color: black; */
+    background-image: url('https://www.pixel4k.com/wp-content/uploads/2018/09/starry-sky-stars-black-glitter-4k_1536013841.jpg');
+    background-size: contain;
     width: 0%;
     height: 0%;
     /* display: none; */

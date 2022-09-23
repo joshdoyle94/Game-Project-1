@@ -300,7 +300,7 @@ const gameLoop = () => {
 
     if (scorePoints() >= 5) {
         // alert('You have won the game!')
-        endGame()
+        pauseGame()
         gameWon()
     }
 
@@ -349,6 +349,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 // const gameInterval = setInterval(gameLoop, 60)
 
+let gameTimer = setInterval(gameLoop, 60)
+
 // start game function
 const startGame = () => {
     gameStart = true
@@ -358,10 +360,12 @@ const startGame = () => {
     game.style.height = '100%'
     game.setAttribute('width', getComputedStyle(game)['width'])
     game.setAttribute('height', getComputedStyle(game)['height'])
-    setInterval(gameLoop, 60)
+    // setInterval(gameLoop, 60)
+    gameTimer
+
 }
 
-const endGame = () => {
+const pauseGame = () => {
     gameStart = false
     points.innerText = 0
     start.innerText = 'Start'
@@ -380,20 +384,10 @@ start.addEventListener('click', (event) => {
         // points.innerText = 0
         // start.innerText = 'Start'
         // gameStart = false
-        endGame()
+        pauseGame()
         // clearInterval(startGame)
     }
 })
-
-// const gameRestart = () => {
-//     const restartText = document.createElement('div')
-//     restartText.setAttribute('id', 'restart-text')
-//     restartText.style.color = 'red'
-//     restartText.style.fontSize = '40px'
-//     restartText.style.marginTop = '100px'
-//     restartText.innerText = 'Click here to play again!'
-//     main.appendChild(restartText)
-// }
 
 restart.addEventListener('click', (event) => {
     if (gameStart != true) {
@@ -407,6 +401,7 @@ restart.addEventListener('click', (event) => {
     gameWonText.remove()
     closingStoryText.remove()
     clearInterval(gameLoop)
+    // clearInterval(gameTimer)
     restart.style.display = 'none'
     start.innerText = 'Pause'
     start.style.justifyContent = 'center'
