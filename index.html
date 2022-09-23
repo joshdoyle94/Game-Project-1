@@ -19,20 +19,24 @@
     <div id="gameboard">
         <main id="main">
             <div class="instructions">
-                <h1>Help!</h1>
+                <h1 id="help">Help!</h1>
                 <br>
-                <h2>Mike the Shark was about to feast on a tasty human meal
+                <h2>Jimmy the Shark was about to feast on a tasty human meal
                 <br>but aliens came and abducted the helpless person before it could be eaten!
                 <br>
-                <br>Enraged, Mike leapt gracefully out of the water into space in pursuit of his dinner.
+                <br>Enraged, Jimmy vigorously leapt out of the water into space in pursuit of his dinner.
                 </h2>
                 <br><br><br>
-                <h1>Instructions:</h1>
+                <h1 id="instructionHeader">Instructions:</h1>
                 <h2>Avoid asteroids! Each hit will cost you 20 health.</h2>
                 <h2>Eat 10 aliens to win and take back your human!</h2>
-                <h2>Control Mike using the WASD keys</h2>
+                <h2>Control Jimmy using the WASD keys</h2>
             </div>
             <canvas id="canvas"></canvas>
+            <img id="playerShark" src="sharkPlayerLarge.png">
+            <img id="alienEnemy" src="AlienPink.png">
+            <img id="asteroid1" src="asteroid1.png">
+            <h2 id="restart">Click here to restart</h2>
         </main>
     </div>
 
@@ -48,7 +52,7 @@
         <h2>Score: <span id="points">0</span></h2>
     </div>
 
-    <div id="high-score">
+    <div id="healthText">
         <h2>Health: <span id="health">100</span></h2>
     </div>
     </main>

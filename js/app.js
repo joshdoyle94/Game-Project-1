@@ -12,11 +12,15 @@
 const game = document.getElementById('canvas')
 const movement = document.getElementById('movement')
 const message = document.getElementById('status')
+const score = document.getElementById('score')
 const points = document.getElementById('points')
+const healthText = document.getElementById('healthText')
 const healthStatus = document.getElementById('health')
 const gameTitle = document.querySelector('#game-title')
+const main = document.querySelector('#main')
 const instructions = document.querySelector('.instructions')
 const start = document.querySelector('#start')
+const restart = document.querySelector('#restart')
 let gameStart = false
 
 
@@ -44,6 +48,7 @@ class playerCharacter {
         this.height = height,
         this.alive = true,
         this.speed = 40,
+        this.image = document.getElementById('playerShark'),
         this.direction = {
             up: false,
             down: false,
@@ -91,12 +96,10 @@ class playerCharacter {
         },
         this.render = function () {
             ctx.fillStyle = this.color
-            ctx.fillRect(this.x, this.y, this.width, this.height)
+            // ctx.fillRect(this.x, this.y, this.width, this.height)
+            ctx.drawImage(this.image, this.x, (this.y - 50))
         }
     }
-    // draw(context){
-    //     context.fillRect(this.)
-    // }
 }
 
 class enemyCharacter {
@@ -107,20 +110,39 @@ class enemyCharacter {
         this.width = width,
         this.height = height,
         this.alive = true,
+        this.image = document.getElementById('alienEnemy'),
         this.render = function () {
             ctx.fillStyle = this.color
-            ctx.fillRect(this.x, this.y, this.width, this.height)
+            // ctx.fillRect(this.x, this.y, this.width, this.height)
+            ctx.drawImage(this.image, (this.x - 20), (this.y - 25))
+        }
+    }
+}
+
+class enemyAsteroid {
+    constructor(x, y, color, width, height) {
+        this.x = x,
+        this.y = y,
+        this.color = color,
+        this.width = width,
+        this.height = height,
+        this.alive = true,
+        this.image = document.getElementById('asteroid1'),
+        this.render = function () {
+            ctx.fillStyle = this.color
+            // ctx.fillRect(this.x, this.y, this.width, this.height)
+            ctx.drawImage(this.image, (this.x - 32), (this.y - 22), 200, 200)
         }
     }
 }
 
 
 // create character objects
-const shark = new playerCharacter(50, 280, 'white', 75, 75)
-let alien = new enemyCharacter(1500, 300, 'purple', 50, 50)
-let alien2 = new enemyCharacter(1800, 100, 'purple', 50, 50)
-let alien3 = new enemyCharacter(2600, 480, 'purple', 50, 50)
-let asteroid = new enemyCharacter(1500, 500, 'blue', 120, 120)
+const shark = new playerCharacter(50, 280, 'white', 125, 75)
+let alien = new enemyCharacter(1500, 300, 'purple', 67, 55)
+let alien2 = new enemyCharacter(1800, 100, 'purple', 67, 55)
+let alien3 = new enemyCharacter(2600, 480, 'purple', 67, 55)
+let asteroid = new enemyAsteroid(500, 500, 'blue', 120, 120)
 
 // create background objects
 
@@ -239,13 +261,13 @@ const gameLoop = () => {
     if (alien2.alive) {
         alienHitDetection(alien2)
         alienMovement(alien2)
-        //alien2Respawn()
+        alien2Respawn()
     }
 
     if (alien3.alive) {
         alienHitDetection(alien3)
         alienMovement(alien3)
-        //alien3Respawn()
+        alien3Respawn()
     }
 
     if (asteroid.alive) {
@@ -277,7 +299,9 @@ const gameLoop = () => {
     }
 
     if (scorePoints() >= 5) {
-        alert('You have won the game!')
+        // alert('You have won the game!')
+        endGame()
+        gameWon()
     }
 
     // if (decreaseHealth() <= 0) {
@@ -285,7 +309,37 @@ const gameLoop = () => {
     // }
 }
 
-
+const gameWon = () => {
+    game.style.display = 'none'
+    start.style.display = 'none'
+    message.style.display = 'none'
+    score.style.display = 'none'
+    healthText.style.display = 'none'
+    // game.remove()
+    // start.remove()
+    // message.remove()
+    // score.remove()
+    // healthText.remove()
+    const gameWonText = document.createElement('div')
+    gameWonText.setAttribute('id', 'game-Won-Text')
+    gameWonText.style.color = 'white'
+    gameWonText.style.fontSize = '30px'
+    gameWonText.style.marginTop = '70px'
+    gameWonText.innerText = 'You have won the game!'
+    const closingStoryText = document.createElement('div')
+    closingStoryText.setAttribute('id', 'closing-story-text')
+    closingStoryText.style.color = 'white'
+    closingStoryText.style.fontSize = '30px'
+    closingStoryText.style.marginTop = '100px'
+    closingStoryText.innerText = 'Jimmy ate all the aliens, found his human dinner and then ate that too! Yummy!'
+    main.appendChild(gameWonText)
+    main.appendChild(closingStoryText)
+    restart.style.display = 'flex'
+    // restart.style.position = 'absolute'
+    // restart.style.bottom = '0'
+    // restart.style.marginLeft = '450px'
+    // restart.style.marginBottom = '200px'
+}
 
 document.addEventListener('DOMContentLoaded', (event) => {
     // document.addEventListener('keydown', userMovementHandler)
@@ -311,7 +365,6 @@ const endGame = () => {
     gameStart = false
     points.innerText = 0
     start.innerText = 'Start'
-    clearInterval(gameLoop)
 }
 
 start.addEventListener('click', (event) => {
@@ -330,4 +383,37 @@ start.addEventListener('click', (event) => {
         endGame()
         // clearInterval(startGame)
     }
+})
+
+// const gameRestart = () => {
+//     const restartText = document.createElement('div')
+//     restartText.setAttribute('id', 'restart-text')
+//     restartText.style.color = 'red'
+//     restartText.style.fontSize = '40px'
+//     restartText.style.marginTop = '100px'
+//     restartText.innerText = 'Click here to play again!'
+//     main.appendChild(restartText)
+// }
+
+restart.addEventListener('click', (event) => {
+    if (gameStart != true) {
+    const gameWonText = document.querySelector('#game-Won-Text')
+    const closingStoryText = document.querySelector('#closing-story-text')
+    start.style.display = 'initial'
+    game.style.display  = 'initial'
+    message.style.display = 'initial'
+    score.style.display = 'initial'
+    healthText.style.display = 'initial'
+    gameWonText.remove()
+    closingStoryText.remove()
+    clearInterval(gameLoop)
+    restart.style.display = 'none'
+    start.innerText = 'Pause'
+    start.style.justifyContent = 'center'
+    start.style.textAlign = 'center'
+    start.style.alignContent = 'center'
+    start.style.fontSize = '25px'
+    start.style.marginTop = '50px'
+    startGame()
+    } 
 })

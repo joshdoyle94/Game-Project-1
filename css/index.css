@@ -24,7 +24,7 @@ body {
 }
 
 canvas {
-    background-color: #222;
+    background-color: black;
     /* background-image: url('https://th.bing.com/th/id/R.98474d9f277570630c7f0b7b50412303?rik=hp%2foD8VTgmvD3Q&riu=http%3a%2f%2fwallup.net%2fwp-content%2fuploads%2f2016%2f01%2f15775-space-stars.jpg&ehk=jLpf9TXuHHVTEjoq56oqmlMDDASshwjhRUz%2f7qsS07E%3d&risl=&pid=ImgRaw&r=0'); */
     width: 0%;
     height: 0%;
@@ -79,7 +79,7 @@ h1 {
     position: absolute;
     bottom: 0;
     left: 0;
-    background-color: black
+    background-color: black;
 }
 
 #score {
@@ -98,7 +98,7 @@ h1 {
     background-color: black;
 }
 
-#high-score {
+#healthText {
     color: red;
     /* border: red solid; */
     display: flex;
@@ -124,4 +124,31 @@ h1 {
 .instructions {
     color: white;
     margin: 0;
+}
+
+#help {
+    font-family: 'Creepster', cursive;
+}
+
+#instructionHeader {
+    font-family: 'Creepster', cursive;
+}
+
+#playerShark {
+    display: none;
+}
+
+#alienEnemy {
+    display: none;
+}
+
+#asteroid1 {
+    display: none;
+}
+
+#restart {
+    color: red;
+    display: none;
+    justify-content: center;
+    text-align: center;
 }
