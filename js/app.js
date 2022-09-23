@@ -14,10 +14,14 @@ const movement = document.getElementById('movement')
 const message = document.getElementById('status')
 const points = document.getElementById('points')
 const healthStatus = document.getElementById('health')
+const start = document.querySelector('#start')
+let gameStart = false
+
 
 // function to keep track of points (aliens eaten)
 const scorePoints = () => { return parseInt(points.innerText,10)}
 const decreaseHealth = () => { return parseInt(healthStatus.innerText, 10)}
+const increaseHealth = () => { return parseInt(healthStatus.innerText, 10)}
 
 const ctx = game.getContext('2d')
 
@@ -105,31 +109,15 @@ class enemyCharacter {
     }
 }
 
+
 // create character objects
-const shark = new playerCharacter(100, 100, 'white', 75, 75)
+const shark = new playerCharacter(50, 280, 'white', 75, 75)
 let alien = new enemyCharacter(1500, 300, 'purple', 50, 50)
-let alien2 = new enemyCharacter(1000, 100, 'purple', 50, 50)
-let alien3 = new enemyCharacter(200, 480, 'purple', 50, 50)
+let alien2 = new enemyCharacter(1800, 100, 'purple', 50, 50)
+let alien3 = new enemyCharacter(2000, 480, 'purple', 50, 50)
 let asteroid = new enemyCharacter(1500, 500, 'blue', 120, 120)
 
-
-//create movement function for player character
-// const userMovementHandler = (key) => {
-//     switch (key.keyCode) {
-//         case(87):
-//             shark.y -= 10
-//             break
-//         case(65):
-//             shark.x -= 10
-//             break
-//         case(83):
-//             shark.y += 10
-//             break
-//         case(68):
-//             shark.x += 10
-//             break  
-//     }
-// }
+// create background objects
 
 document.addEventListener('keydown', (e) => {
     shark.setDirection(e.key)
@@ -144,66 +132,67 @@ document.addEventListener('keyup', (e) => {
 
 // alien enemies automated movement
 const alienMovement = (alienEnemy) => {
-    if (alienEnemy.alive) {
+    if (gameStart != false) {
         alienEnemy.x -= 50
     }
 }
 
 // asteroid automated movement
 const asteroidMovement = () => {
-    if (asteroid.alive) {
+    if (gameStart != false) {
         asteroid.x -= 50
     }
 }
 
 // alien respawn movement
 const alienRespawn = () => {
+    let randomY = Math.floor(Math.random() * 575)
     if (alien.alive != true) {
         alien.alive = true
-        // alien.y = Math.floor(Math.random() - 200)
         alien.x = 2000
-        alien.y = 300
+        alien.y = randomY
     } else if (alien.x < -300) {
         alien.x = 2000
-        alien.y = 300
+        alien.y = randomY
     }
 }
 
 //alien2 respawn movement
 const alien2Respawn = () => {
+    let randomY = Math.floor(Math.random() * 575)
     if (alien2.alive != true) {
         alien2.alive = true
-        // alien.y = Math.floor(Math.random() - 200)
         alien2.x = 2000
-        alien2.y = 100
+        alien2.y = randomY
     } else if (alien2.x < -300) {
         alien2.x = 2000
-        alien2.y = 100
+        alien2.y = randomY
     }
 }
 
 //alien3 respawn movement
 const alien3Respawn = () => {
+    let randomY = Math.floor(Math.random() * 575)
     if (alien3.alive != true) {
         alien3.alive = true
-        // alien.y = Math.floor(Math.random() - 200)
         alien3.x = 2000
-        alien3.y = 480
+        alien3.y = randomY
     } else if (alien3.x < -300) {
         alien3.x = 2000
-        alien3.y = 480
+        alien3.y = randomY
     }
 }
 
 // asteroid respawn movement
 const asteroidRespawn = () => {
+    let randomY = Math.floor(Math.random() * 575)
     if (asteroid.alive != true) {
         asteroid.alive = true
         asteroid.x = 1500
-        asteroid.y = 500
+        asteroid.y = randomY
     }  else if (asteroid.x < -300) {
         asteroid.x = 1500
-        asteroid.y = 500
+        asteroid.y = randomY
     }
 }
 
@@ -216,6 +205,9 @@ const alienHitDetection = (alienEnemy) => {
             alienEnemy.alive = false
             message.textContent = 'Alien eaten!'
             points.innerText = scorePoints() + 1
+            if (healthStatus.innerText != '100') {
+            healthStatus.innerText = increaseHealth() + 5
+            }
         }
 }
 
@@ -231,17 +223,18 @@ const asteroidHitDetection = () => {
         }
 }
 
+// recurring in-game logic
 const gameLoop = () => {
     if (alien.alive) {
         alienHitDetection(alien)
         alienMovement(alien)
-        //alienRespawn()
+        alienRespawn()
     }
 
     if (alien2.alive) {
         alienHitDetection(alien2)
         alienMovement(alien2)
-       // alien2Respawn()
+        //alien2Respawn()
     }
 
     if (alien3.alive) {
@@ -253,12 +246,12 @@ const gameLoop = () => {
     if (asteroid.alive) {
         asteroidHitDetection()
         asteroidMovement()
-        //asteroidRespawn()
+        asteroidRespawn()
     }
 
     ctx.clearRect(0, 0, game.width, game.height)
 
-    movement.textContent = shark.x + ", " + shark.y
+    // movement.textContent = shark.x + ", " + shark.y
     shark.render()
     shark.moveShark()
 
@@ -287,7 +280,47 @@ const gameLoop = () => {
     // }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+
+
+document.addEventListener('DOMContentLoaded', (event) => {
     // document.addEventListener('keydown', userMovementHandler)
-    setInterval(gameLoop, 60)
+    // setInterval(gameLoop, 60)
+    console.log('DOM fully loaded and parsed')
+})
+
+// const gameInterval = setInterval(gameLoop, 60)
+
+// start game function
+const startGame = () => {
+    // game.setAttribute('width', getComputedStyle(game)['width'])
+    // game.setAttribute('height', getComputedStyle(game)['height'])
+    gameStart = true
+    const gameInterval = setInterval(gameLoop, 60)
+    // setInterval(gameLoop, 60)
+    // gameInterval
+}
+
+const endGame = () => {
+    gameStart = false
+    points.innerText = 0
+    start.innerText = 'Start'
+    //clearInterval(gameLoop, 60)
+}
+
+start.addEventListener('click', (event) => {
+    if (gameStart != true) {
+    start.innerText = 'Pause'
+    start.style.justifyContent = 'center'
+    start.style.textAlign = 'center'
+    start.style.alignContent = 'center'
+    start.style.fontSize = '25px'
+    start.style.marginTop = '50px'
+    startGame()
+    } else {
+        // points.innerText = 0
+        // start.innerText = 'Start'
+        // gameStart = false
+        endGame()
+        // clearInterval(startGame)
+    }
 })
