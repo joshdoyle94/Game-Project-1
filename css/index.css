@@ -1,3 +1,4 @@
+
 body {
     background-color: black;
     display: flex;
@@ -6,7 +7,7 @@ body {
 }
 
 #container {
-    height: 825px;
+    height: 850px;
     width: 1200px;
     border: red solid;
     position: relative;
@@ -18,6 +19,8 @@ body {
     /* border: red solid; */
     background-color: black;
     color: red;
+    font-size: 30px;
+    font-family: 'Creepster', cursive;
 }
 
 canvas {
@@ -54,7 +57,7 @@ h1 {
     height: 55px;
     width: 300px;
     justify-content: center;
-    text-align: top;
+    text-align: center;
     align-content: center;
     margin: 0 0 0 47px;
     position: absolute;

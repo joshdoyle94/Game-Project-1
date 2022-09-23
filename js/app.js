@@ -14,6 +14,7 @@ const movement = document.getElementById('movement')
 const message = document.getElementById('status')
 const points = document.getElementById('points')
 const healthStatus = document.getElementById('health')
+const gameTitle = document.querySelector('#game-title')
 const instructions = document.querySelector('.instructions')
 const start = document.querySelector('#start')
 let gameStart = false
@@ -93,6 +94,9 @@ class playerCharacter {
             ctx.fillRect(this.x, this.y, this.width, this.height)
         }
     }
+    // draw(context){
+    //     context.fillRect(this.)
+    // }
 }
 
 class enemyCharacter {
@@ -295,6 +299,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 const startGame = () => {
     gameStart = true
     instructions.style.display = 'none'
+    gameTitle.style.fontSize = '15px'
     game.style.width = '100%'
     game.style.height = '100%'
     game.setAttribute('width', getComputedStyle(game)['width'])
