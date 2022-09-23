@@ -30,8 +30,8 @@ console.log('message', message)
 console.log('game', game)
 
 //get computed size of the canvas
-game.setAttribute('width', getComputedStyle(game)['width'])
-game.setAttribute('height', getComputedStyle(game)['height'])
+// game.setAttribute('width', getComputedStyle(game)['width'])
+// game.setAttribute('height', getComputedStyle(game)['height'])
 
 class playerCharacter {
     constructor(x, y, color, width, height) {
@@ -41,7 +41,7 @@ class playerCharacter {
         this.width = width,
         this.height = height,
         this.alive = true,
-        this.speed = 15,
+        this.speed = 40,
         this.direction = {
             up: false,
             down: false,
@@ -114,7 +114,7 @@ class enemyCharacter {
 const shark = new playerCharacter(50, 280, 'white', 75, 75)
 let alien = new enemyCharacter(1500, 300, 'purple', 50, 50)
 let alien2 = new enemyCharacter(1800, 100, 'purple', 50, 50)
-let alien3 = new enemyCharacter(2000, 480, 'purple', 50, 50)
+let alien3 = new enemyCharacter(2600, 480, 'purple', 50, 50)
 let asteroid = new enemyCharacter(1500, 500, 'blue', 120, 120)
 
 // create background objects
@@ -292,19 +292,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 // start game function
 const startGame = () => {
-    // game.setAttribute('width', getComputedStyle(game)['width'])
-    // game.setAttribute('height', getComputedStyle(game)['height'])
     gameStart = true
-    const gameInterval = setInterval(gameLoop, 60)
-    // setInterval(gameLoop, 60)
-    // gameInterval
+    // game.style.display = 'flex'
+    // game.style.width = '100%'
+    // game.style.height = '100%'
+    // const gameInterval = 
+    setInterval(gameLoop, 60)
+    // clearInterval(gameLoop)
 }
 
 const endGame = () => {
     gameStart = false
     points.innerText = 0
     start.innerText = 'Start'
-    //clearInterval(gameLoop, 60)
+    clearInterval(gameLoop)
 }
 
 start.addEventListener('click', (event) => {
