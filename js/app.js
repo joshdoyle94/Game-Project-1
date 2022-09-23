@@ -14,6 +14,7 @@ const movement = document.getElementById('movement')
 const message = document.getElementById('status')
 const points = document.getElementById('points')
 const healthStatus = document.getElementById('health')
+const instructions = document.querySelector('.instructions')
 const start = document.querySelector('#start')
 let gameStart = false
 
@@ -271,9 +272,9 @@ const gameLoop = () => {
         asteroid.render()
     }
 
-    // if (scorePoints() >= 5) {
-    //     alert('You have won the game!')
-    // }
+    if (scorePoints() >= 5) {
+        alert('You have won the game!')
+    }
 
     // if (decreaseHealth() <= 0) {
     //     alert('The shark has died from asteroid poisoing')
@@ -293,12 +294,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
 // start game function
 const startGame = () => {
     gameStart = true
-    // game.style.display = 'flex'
-    // game.style.width = '100%'
-    // game.style.height = '100%'
-    // const gameInterval = 
+    instructions.style.display = 'none'
+    game.style.width = '100%'
+    game.style.height = '100%'
+    game.setAttribute('width', getComputedStyle(game)['width'])
+    game.setAttribute('height', getComputedStyle(game)['height'])
     setInterval(gameLoop, 60)
-    // clearInterval(gameLoop)
 }
 
 const endGame = () => {

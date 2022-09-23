@@ -1,5 +1,5 @@
 body {
-    background-color: green;
+    background-color: black;
     display: flex;
     justify-content: center;
 
@@ -8,7 +8,7 @@ body {
 #container {
     height: 825px;
     width: 1200px;
-    /* border: red solid; */
+    border: red solid;
     position: relative;
     background-color: black;
     color: black
@@ -16,14 +16,15 @@ body {
 
 #game-title {
     /* border: red solid; */
-    background-color: lightcoral;
+    background-color: black;
+    color: red;
 }
 
 canvas {
     background-color: #222;
     /* background-image: url('https://th.bing.com/th/id/R.98474d9f277570630c7f0b7b50412303?rik=hp%2foD8VTgmvD3Q&riu=http%3a%2f%2fwallup.net%2fwp-content%2fuploads%2f2016%2f01%2f15775-space-stars.jpg&ehk=jLpf9TXuHHVTEjoq56oqmlMDDASshwjhRUz%2f7qsS07E%3d&risl=&pid=ImgRaw&r=0'); */
-    width: 100%;
-    height: 100%;
+    width: 0%;
+    height: 0%;
     /* display: none; */
   }
 
@@ -43,7 +44,7 @@ h1 {
     text-align: center;
     align-content: center;
     margin: 0px 47px 1000px 47px;
-    background-color: lightblue;
+    background-color: black;
 }
 
 #start {
@@ -53,13 +54,13 @@ h1 {
     height: 55px;
     width: 300px;
     justify-content: center;
-    text-align: center;
+    text-align: top;
     align-content: center;
     margin: 0 0 0 47px;
     position: absolute;
     bottom: 0;
     left: 0;
-    background-color: lightseagreen
+    background-color: black;
 }
 
 #game-start {
@@ -75,7 +76,7 @@ h1 {
     position: absolute;
     bottom: 0;
     left: 0;
-    background-color: lightseagreen
+    background-color: black
 }
 
 #score {
@@ -91,7 +92,7 @@ h1 {
     position: absolute;
     bottom: 0;
     right: 0;
-    background-color: lightgreen
+    background-color: black;
 }
 
 #high-score {
@@ -107,7 +108,7 @@ h1 {
     position: absolute;
     bottom: 0;
     right: 0;
-    background-color: lightgoldenrodyellow
+    background-color: black;
 }
 
 #music {
