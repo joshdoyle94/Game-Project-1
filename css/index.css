@@ -140,10 +140,26 @@ h1 {
 }
 
 #alienEnemy {
-    display: none;
+    /* display: none; */
+}
+
+#alien2 {
+    /* display: none; */
+}
+
+#alien3 {
+    /* display: none; */
 }
 
 #asteroid1 {
+    display: none;
+}
+
+#asteroid2 {
+    display: none;
+}
+
+#asteroid3 {
     display: none;
 }
 
@@ -152,4 +168,19 @@ h1 {
     display: none;
     justify-content: center;
     text-align: center;
+}
+
+#story-text {
+    font-size: 20px;
+    color: red;
+}
+
+.instruction-text {
+    font-size: 20px;
+    color: red;
+}
+
+#aliens-to-eat {
+    color: red;
+    margin: 0;
 }

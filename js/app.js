@@ -102,7 +102,7 @@ class playerCharacter {
     }
 }
 
-class enemyCharacter {
+class enemyAlien1 {
     constructor(x, y, color, width, height) {
         this.x = x,
         this.y = y,
@@ -119,7 +119,41 @@ class enemyCharacter {
     }
 }
 
-class enemyAsteroid {
+class enemyAlien2 {
+    constructor(x, y, color, width, height) {
+        this.x = x,
+        this.y = y,
+        this.color = color,
+        this.width = width,
+        this.height = height,
+        this.alive = true,
+        this.image = document.getElementById('alien2'),
+        this.render = function () {
+            ctx.fillStyle = this.color
+            // ctx.fillRect(this.x, this.y, this.width, this.height)
+            ctx.drawImage(this.image, (this.x - 34), (this.y - 38))
+        }
+    }
+}
+
+class enemyAlien3 {
+    constructor(x, y, color, width, height) {
+        this.x = x,
+        this.y = y,
+        this.color = color,
+        this.width = width,
+        this.height = height,
+        this.alive = true,
+        this.image = document.getElementById('alien3'),
+        this.render = function () {
+            ctx.fillStyle = this.color
+            // ctx.fillRect(this.x, this.y, this.width, this.height)
+            ctx.drawImage(this.image, (this.x - 30), (this.y - 15))
+        }
+    }
+}
+
+class enemyAsteroid1 {
     constructor(x, y, color, width, height) {
         this.x = x,
         this.y = y,
@@ -131,7 +165,41 @@ class enemyAsteroid {
         this.render = function () {
             ctx.fillStyle = this.color
             // ctx.fillRect(this.x, this.y, this.width, this.height)
-            ctx.drawImage(this.image, (this.x - 32), (this.y - 22), 200, 200)
+            ctx.drawImage(this.image, (this.x - 50), (this.y - 38), 300, 300)
+        }
+    }
+}
+
+class enemyAsteroid2 {
+    constructor(x, y, color, width, height) {
+        this.x = x,
+        this.y = y,
+        this.color = color,
+        this.width = width,
+        this.height = height,
+        this.alive = true,
+        this.image = document.getElementById('asteroid2'),
+        this.render = function () {
+            ctx.fillStyle = this.color
+            // ctx.fillRect(this.x, this.y, this.width, this.height)
+            ctx.drawImage(this.image, (this.x - 37), (this.y - 60), 200, 200)
+        }
+    }
+}
+
+class enemyAsteroid3 {
+    constructor(x, y, color, width, height) {
+        this.x = x,
+        this.y = y,
+        this.color = color,
+        this.width = width,
+        this.height = height,
+        this.alive = true,
+        this.image = document.getElementById('asteroid3'),
+        this.render = function () {
+            ctx.fillStyle = this.color
+            // ctx.fillRect(this.x, this.y, this.width, this.height)
+            ctx.drawImage(this.image, (this.x - 43), (this.y - 45), 200, 200)
         }
     }
 }
@@ -139,10 +207,12 @@ class enemyAsteroid {
 
 // create character objects
 const shark = new playerCharacter(50, 280, 'white', 125, 75)
-let alien = new enemyCharacter(1500, 300, 'purple', 67, 55)
-let alien2 = new enemyCharacter(1800, 100, 'purple', 67, 55)
-let alien3 = new enemyCharacter(2600, 480, 'purple', 67, 55)
-let asteroid = new enemyAsteroid(500, 500, 'blue', 120, 120)
+let alien = new enemyAlien1(1500, 300, 'purple', 67, 55)
+let alien2 = new enemyAlien2(2000, 100, 'purple', 65, 52)
+let alien3 = new enemyAlien3(3500, 480, 'purple', 62, 70)
+let asteroid = new enemyAsteroid1(1600, 300, 'blue', 175, 175)
+let asteroid2 = new enemyAsteroid2(4000, 10, 'blue', 110, 70)
+let asteroid3 = new enemyAsteroid3(2800, 250, 'blue', 100, 95)
 
 // create background objects
 
@@ -165,7 +235,7 @@ const alienMovement = (alienEnemy) => {
 }
 
 // asteroid automated movement
-const asteroidMovement = () => {
+const asteroidMovement = (asteroid) => {
     if (gameStart != false) {
         asteroid.x -= 50
     }
@@ -223,6 +293,30 @@ const asteroidRespawn = () => {
     }
 }
 
+const asteroid2Respawn = () => {
+    let randomY = Math.floor(Math.random() * 575)
+    if (asteroid2.alive != true) {
+        asteroid2.alive = true
+        asteroid2.x = 1500
+        asteroid2.y = randomY
+    }  else if (asteroid2.x < -300) {
+        asteroid2.x = 1500
+        asteroid2.y = randomY
+    }
+}
+
+const asteroid3Respawn = () => {
+    let randomY = Math.floor(Math.random() * 575)
+    if (asteroid3.alive != true) {
+        asteroid3.alive = true
+        asteroid3.x = 1500
+        asteroid3.y = randomY
+    }  else if (asteroid3.x < -300) {
+        asteroid3.x = 1500
+        asteroid3.y = randomY
+    }
+}
+
 //detect alien object being hit
 const alienHitDetection = (alienEnemy) => {
     if(shark.x < alienEnemy.x + alienEnemy.width
@@ -239,7 +333,7 @@ const alienHitDetection = (alienEnemy) => {
 }
 
 //detect asteroid object being hit
-const asteroidHitDetection = () => {
+const asteroidHitDetection = (asteroid) => {
     if(shark.x < asteroid.x + asteroid.width
         && shark.x + shark.width > asteroid.x
         && shark.y < asteroid.y + asteroid.height
@@ -271,9 +365,21 @@ const gameLoop = () => {
     }
 
     if (asteroid.alive) {
-        asteroidHitDetection()
-        asteroidMovement()
+        asteroidHitDetection(asteroid)
+        asteroidMovement(asteroid)
         asteroidRespawn()
+    }
+
+    if (asteroid2.alive) {
+        asteroidHitDetection(asteroid2)
+        asteroidMovement(asteroid2)
+        asteroid2Respawn()
+    }
+
+    if (asteroid3.alive) {
+        asteroidHitDetection(asteroid3)
+        asteroidMovement(asteroid3)
+        asteroid3Respawn()
     }
 
     ctx.clearRect(0, 0, game.width, game.height)
@@ -298,15 +404,23 @@ const gameLoop = () => {
         asteroid.render()
     }
 
-    if (scorePoints() >= 5) {
-        // alert('You have won the game!')
+    if (asteroid2.alive) {
+        asteroid2.render()
+    }
+
+    if (asteroid3.alive) {
+        asteroid3.render()
+    }
+
+    if (scorePoints() >= 15) {
         pauseGame()
         gameWon()
     }
 
-    // if (decreaseHealth() <= 0) {
-    //     alert('The shark has died from asteroid poisoing')
-    // }
+    if (decreaseHealth() <= 0) {
+        // pauseGame()
+        gameLost()
+    }
 }
 
 const gameWon = () => {
@@ -341,6 +455,38 @@ const gameWon = () => {
     // restart.style.marginBottom = '200px'
 }
 
+const gameLost = () => {
+    game.style.display = 'none'
+    start.style.display = 'none'
+    message.style.display = 'none'
+    score.style.display = 'none'
+    healthText.style.display = 'none'
+    // game.remove()
+    // start.remove()
+    // message.remove()
+    // score.remove()
+    // healthText.remove()
+    const gameLostText = document.createElement('div')
+    gameLostText.setAttribute('id', 'game-Won-Text')
+    gameLostText.style.color = 'white'
+    gameLostText.style.fontSize = '30px'
+    gameLostText.style.marginTop = '70px'
+    gameLostText.innerText = 'You lose!'
+    const closingStoryText = document.createElement('div')
+    closingStoryText.setAttribute('id', 'closing-story-text')
+    closingStoryText.style.color = 'white'
+    closingStoryText.style.fontSize = '30px'
+    closingStoryText.style.marginTop = '100px'
+    closingStoryText.innerText = 'Jimmy was hit by too many asteroids, and died.'
+    main.appendChild(gameLostText)
+    main.appendChild(closingStoryText)
+    restart.style.display = 'flex'
+    // restart.style.position = 'absolute'
+    // restart.style.bottom = '0'
+    // restart.style.marginLeft = '450px'
+    // restart.style.marginBottom = '200px'
+}
+
 document.addEventListener('DOMContentLoaded', (event) => {
     // document.addEventListener('keydown', userMovementHandler)
     // setInterval(gameLoop, 60)
@@ -354,6 +500,14 @@ let gameTimer = setInterval(gameLoop, 60)
 // start game function
 const startGame = () => {
     gameStart = true
+    const alienImage1 = document.querySelector('#alienEnemy')
+    const alienImage2 = document.querySelector('#alien2')
+    const alienImage3 = document.querySelector('#alien3')
+    const alienToEatInstruction = document.querySelector('#aliens-to-eat')
+    alienImage1.style.display = 'none'
+    alienImage2.style.display = 'none'
+    alienImage3.style.display = 'none'
+    alienToEatInstruction.style.display = 'none'
     instructions.style.display = 'none'
     gameTitle.style.fontSize = '15px'
     game.style.width = '100%'
@@ -362,7 +516,6 @@ const startGame = () => {
     game.setAttribute('height', getComputedStyle(game)['height'])
     // setInterval(gameLoop, 60)
     gameTimer
-
 }
 
 const pauseGame = () => {
