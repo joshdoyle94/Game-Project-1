@@ -412,14 +412,22 @@ const gameLoop = () => {
         asteroid3.render()
     }
 
-    if (scorePoints() >= 15) {
+    if (scorePoints() >= 3) {
         pauseGame()
         gameWon()
+        points.innerText = 0
+        healthStatus.innerText = 100
+        shark.x = 50
+        shark.y = 280
     }
 
     if (decreaseHealth() <= 0) {
-        // pauseGame()
+        pauseGame()
         gameLost()
+        points.innerText = 0
+        healthStatus.innerText = 100
+        shark.x = 50
+        shark.y = 280
     }
 }
 
@@ -434,19 +442,19 @@ const gameWon = () => {
     // message.remove()
     // score.remove()
     // healthText.remove()
-    const gameWonText = document.createElement('div')
-    gameWonText.setAttribute('id', 'game-Won-Text')
-    gameWonText.style.color = 'white'
-    gameWonText.style.fontSize = '30px'
-    gameWonText.style.marginTop = '70px'
-    gameWonText.innerText = 'You have won the game!'
+    const gameOverText = document.createElement('div')
+    gameOverText.setAttribute('id', 'game-Over-Text')
+    gameOverText.style.color = 'white'
+    gameOverText.style.fontSize = '30px'
+    gameOverText.style.marginTop = '70px'
+    gameOverText.innerText = 'You have won the game!'
     const closingStoryText = document.createElement('div')
     closingStoryText.setAttribute('id', 'closing-story-text')
     closingStoryText.style.color = 'white'
     closingStoryText.style.fontSize = '30px'
     closingStoryText.style.marginTop = '100px'
     closingStoryText.innerText = 'Jimmy ate all the aliens, found his human dinner and then ate that too! Yummy!'
-    main.appendChild(gameWonText)
+    main.appendChild(gameOverText)
     main.appendChild(closingStoryText)
     restart.style.display = 'flex'
     // restart.style.position = 'absolute'
@@ -465,20 +473,20 @@ const gameLost = () => {
     // start.remove()
     // message.remove()
     // score.remove()
-    // healthText.remove()
-    const gameLostText = document.createElement('div')
-    gameLostText.setAttribute('id', 'game-Won-Text')
-    gameLostText.style.color = 'white'
-    gameLostText.style.fontSize = '30px'
-    gameLostText.style.marginTop = '70px'
-    gameLostText.innerText = 'You lose!'
+    // healthText.innerText = 100
+    const gameOverText = document.createElement('div')
+    gameOverText.setAttribute('id', 'game-Over-Text')
+    gameOverText.style.color = 'white'
+    gameOverText.style.fontSize = '30px'
+    gameOverText.style.marginTop = '70px'
+    gameOverText.innerText = 'You lose!'
     const closingStoryText = document.createElement('div')
     closingStoryText.setAttribute('id', 'closing-story-text')
     closingStoryText.style.color = 'white'
     closingStoryText.style.fontSize = '30px'
     closingStoryText.style.marginTop = '100px'
     closingStoryText.innerText = 'Jimmy was hit by too many asteroids, and died.'
-    main.appendChild(gameLostText)
+    main.appendChild(gameOverText)
     main.appendChild(closingStoryText)
     restart.style.display = 'flex'
     // restart.style.position = 'absolute'
@@ -520,7 +528,7 @@ const startGame = () => {
 
 const pauseGame = () => {
     gameStart = false
-    points.innerText = 0
+    // points.innerText = 0
     start.innerText = 'Start'
 }
 
@@ -544,14 +552,16 @@ start.addEventListener('click', (event) => {
 
 restart.addEventListener('click', (event) => {
     if (gameStart != true) {
-    const gameWonText = document.querySelector('#game-Won-Text')
+    const gameOverText = document.querySelector('#game-Over-Text')
+    // const gameLostText = document.querySelector('#game-Lost-Text')
     const closingStoryText = document.querySelector('#closing-story-text')
     start.style.display = 'initial'
     game.style.display  = 'initial'
     message.style.display = 'initial'
     score.style.display = 'initial'
     healthText.style.display = 'initial'
-    gameWonText.remove()
+    // gameLostText.remove()
+    gameOverText.remove()
     closingStoryText.remove()
     clearInterval(gameLoop)
     // clearInterval(gameTimer)
