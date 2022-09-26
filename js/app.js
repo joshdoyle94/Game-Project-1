@@ -342,7 +342,7 @@ const asteroidHitDetection = (asteroid) => {
         && shark.y < asteroid.y + asteroid.height
         && shark.y + shark.height > asteroid.y) {
             asteroid.alive = false
-            message.textContent = 'Shark has been hit'
+            message.textContent = 'Hit by asteroid!'
             healthStatus.innerText = decreaseHealth() - 20
         }
 }
