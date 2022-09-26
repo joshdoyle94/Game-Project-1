@@ -1,14 +1,6 @@
-// console.log('test test test, is js working?')
+// goal: create a side scroller game using HTML, CSS, and JS with Canvas
 
-// goal: make a side scroller game using HTML, CSS, and JS with Canvas
-
-//we need two entities to start: one shark, and one alien
-//shark needs to be moveable with wasd keys
-//alien can be stationary for mvp
-//shark should be able to touch alien 
-//shark touching alien should remove alien from the screen
-
-// first we need to grab the elements so we can do stuff
+// grab DOM elements for future use
 const game = document.getElementById('canvas')
 const movement = document.getElementById('movement')
 const message = document.getElementById('status')
@@ -21,24 +13,24 @@ const main = document.querySelector('#main')
 const instructions = document.querySelector('.instructions')
 const start = document.querySelector('#start')
 const restart = document.querySelector('#restart')
+
+// variable to indicate whether the game has started
+// initialize with false
 let gameStart = false
 
 
 // function to keep track of points (aliens eaten)
 const scorePoints = () => { return parseInt(points.innerText,10)}
+
+// functions to decrease and increase player health when hitting objects
 const decreaseHealth = () => { return parseInt(healthStatus.innerText, 10)}
 const increaseHealth = () => { return parseInt(healthStatus.innerText, 10)}
 
+// context for canvas
 const ctx = game.getContext('2d')
 
-console.log('movement', movement)
-console.log('message', message)
-console.log('game', game)
 
-//get computed size of the canvas
-// game.setAttribute('width', getComputedStyle(game)['width'])
-// game.setAttribute('height', getComputedStyle(game)['height'])
-
+// object to define user player character (Jimmy the Shark)
 class playerCharacter {
     constructor(x, y, color, width, height) {
         this.x = x,
@@ -55,7 +47,6 @@ class playerCharacter {
             left: false,
             right: false
         },
-        // we need two key based functions here that will change our heroes movement direction
         this.setDirection = function (key) {
             if (key.toLowerCase() == 'w') { this.direction.up = true }
             if (key.toLowerCase() == 'a') { this.direction.left = true }
@@ -96,12 +87,15 @@ class playerCharacter {
         },
         this.render = function () {
             ctx.fillStyle = this.color
+            // hit box for player character - leave commented out unless testing
             // ctx.fillRect(this.x, this.y, this.width, this.height)
             ctx.drawImage(this.image, this.x, (this.y - 50))
         }
     }
 }
 
+
+// object to define alien enemy type 1
 class enemyAlien1 {
     constructor(x, y, color, width, height) {
         this.x = x,
@@ -119,6 +113,7 @@ class enemyAlien1 {
     }
 }
 
+// object to define alien enemy type 2
 class enemyAlien2 {
     constructor(x, y, color, width, height) {
         this.x = x,
@@ -136,6 +131,7 @@ class enemyAlien2 {
     }
 }
 
+// object to define alien enemy type 3
 class enemyAlien3 {
     constructor(x, y, color, width, height) {
         this.x = x,
@@ -153,6 +149,7 @@ class enemyAlien3 {
     }
 }
 
+// object to define asteroid enemy type 1
 class enemyAsteroid1 {
     constructor(x, y, color, width, height) {
         this.x = x,
@@ -170,6 +167,7 @@ class enemyAsteroid1 {
     }
 }
 
+// object to define asteroid enemy type 2
 class enemyAsteroid2 {
     constructor(x, y, color, width, height) {
         this.x = x,
@@ -187,6 +185,7 @@ class enemyAsteroid2 {
     }
 }
 
+// object to define asteroid enemy type 3
 class enemyAsteroid3 {
     constructor(x, y, color, width, height) {
         this.x = x,
@@ -214,12 +213,13 @@ let asteroid = new enemyAsteroid1(1600, 300, 'blue', 175, 175)
 let asteroid2 = new enemyAsteroid2(4000, 10, 'blue', 110, 70)
 let asteroid3 = new enemyAsteroid3(2800, 250, 'blue', 100, 95)
 
-// create background objects
 
+// movement event listeners to move player character on pressing WASD
 document.addEventListener('keydown', (e) => {
     shark.setDirection(e.key)
 })
 
+// movement event listeners to stop continued player movement after letting go of WASD
 document.addEventListener('keyup', (e) => {
     if (['w','a','s','d'].includes(e.key)) {
         shark.unsetDirection(e.key)
@@ -234,14 +234,14 @@ const alienMovement = (alienEnemy) => {
     }
 }
 
-// asteroid automated movement
+// asteroid enemies automated movement
 const asteroidMovement = (asteroid) => {
     if (gameStart != false) {
         asteroid.x -= 50
     }
 }
 
-// alien respawn movement
+// alien1 respawn logic
 const alienRespawn = () => {
     let randomY = Math.floor(Math.random() * 575)
     if (alien.alive != true) {
@@ -254,7 +254,7 @@ const alienRespawn = () => {
     }
 }
 
-//alien2 respawn movement
+//alien2 respawn logic
 const alien2Respawn = () => {
     let randomY = Math.floor(Math.random() * 575)
     if (alien2.alive != true) {
@@ -267,7 +267,7 @@ const alien2Respawn = () => {
     }
 }
 
-//alien3 respawn movement
+//alien3 respawn logic
 const alien3Respawn = () => {
     let randomY = Math.floor(Math.random() * 575)
     if (alien3.alive != true) {
@@ -280,7 +280,7 @@ const alien3Respawn = () => {
     }
 }
 
-// asteroid respawn movement
+// asteroid1 respawn logic
 const asteroidRespawn = () => {
     let randomY = Math.floor(Math.random() * 575)
     if (asteroid.alive != true) {
@@ -293,6 +293,8 @@ const asteroidRespawn = () => {
     }
 }
 
+
+// asteroid2 respawn logic
 const asteroid2Respawn = () => {
     let randomY = Math.floor(Math.random() * 575)
     if (asteroid2.alive != true) {
@@ -305,6 +307,7 @@ const asteroid2Respawn = () => {
     }
 }
 
+// asteroid3 respawn logic
 const asteroid3Respawn = () => {
     let randomY = Math.floor(Math.random() * 575)
     if (asteroid3.alive != true) {
@@ -344,7 +347,7 @@ const asteroidHitDetection = (asteroid) => {
         }
 }
 
-// recurring in-game logic
+// recurring in-game loop logic
 const gameLoop = () => {
     if (alien.alive) {
         alienHitDetection(alien)
@@ -384,7 +387,6 @@ const gameLoop = () => {
 
     ctx.clearRect(0, 0, game.width, game.height)
 
-    // movement.textContent = shark.x + ", " + shark.y
     shark.render()
     shark.moveShark()
 
@@ -412,13 +414,11 @@ const gameLoop = () => {
         asteroid3.render()
     }
 
-    if (scorePoints() >= 3) {
+    if (scorePoints() >= 15) {
         pauseGame()
         gameWon()
         points.innerText = 0
         healthStatus.innerText = 100
-        shark.x = 50
-        shark.y = 280
     }
 
     if (decreaseHealth() <= 0) {
@@ -426,22 +426,17 @@ const gameLoop = () => {
         gameLost()
         points.innerText = 0
         healthStatus.innerText = 100
-        shark.x = 50
-        shark.y = 280
     }
 }
 
+
+// logic for winning game condition
 const gameWon = () => {
     game.style.display = 'none'
     start.style.display = 'none'
     message.style.display = 'none'
     score.style.display = 'none'
     healthText.style.display = 'none'
-    // game.remove()
-    // start.remove()
-    // message.remove()
-    // score.remove()
-    // healthText.remove()
     const gameOverText = document.createElement('div')
     gameOverText.setAttribute('id', 'game-Over-Text')
     gameOverText.style.color = 'white'
@@ -457,23 +452,16 @@ const gameWon = () => {
     main.appendChild(gameOverText)
     main.appendChild(closingStoryText)
     restart.style.display = 'flex'
-    // restart.style.position = 'absolute'
-    // restart.style.bottom = '0'
-    // restart.style.marginLeft = '450px'
-    // restart.style.marginBottom = '200px'
 }
 
+
+// logic for losing game condition
 const gameLost = () => {
     game.style.display = 'none'
     start.style.display = 'none'
     message.style.display = 'none'
     score.style.display = 'none'
     healthText.style.display = 'none'
-    // game.remove()
-    // start.remove()
-    // message.remove()
-    // score.remove()
-    // healthText.innerText = 100
     const gameOverText = document.createElement('div')
     gameOverText.setAttribute('id', 'game-Over-Text')
     gameOverText.style.color = 'white'
@@ -489,23 +477,17 @@ const gameLost = () => {
     main.appendChild(gameOverText)
     main.appendChild(closingStoryText)
     restart.style.display = 'flex'
-    // restart.style.position = 'absolute'
-    // restart.style.bottom = '0'
-    // restart.style.marginLeft = '450px'
-    // restart.style.marginBottom = '200px'
 }
 
+// DOM Content Loaded event listener to check if DOM Content has fully loaded
 document.addEventListener('DOMContentLoaded', (event) => {
-    // document.addEventListener('keydown', userMovementHandler)
-    // setInterval(gameLoop, 60)
     console.log('DOM fully loaded and parsed')
 })
 
-// const gameInterval = setInterval(gameLoop, 60)
-
+// game timer variable to define speed of game
 let gameTimer = setInterval(gameLoop, 60)
 
-// start game function
+// function to start the game
 const startGame = () => {
     gameStart = true
     const alienImage1 = document.querySelector('#alienEnemy')
@@ -526,12 +508,14 @@ const startGame = () => {
     gameTimer
 }
 
+// function to pause the game
 const pauseGame = () => {
     gameStart = false
     // points.innerText = 0
     start.innerText = 'Start'
 }
 
+// event listener to start the game when "Start" div is clicked
 start.addEventListener('click', (event) => {
     if (gameStart != true) {
     start.innerText = 'Pause'
@@ -542,29 +526,23 @@ start.addEventListener('click', (event) => {
     start.style.marginTop = '50px'
     startGame()
     } else {
-        // points.innerText = 0
-        // start.innerText = 'Start'
-        // gameStart = false
         pauseGame()
-        // clearInterval(startGame)
     }
 })
 
+// event listener to restart the game when "Restart" div is clicked
 restart.addEventListener('click', (event) => {
     if (gameStart != true) {
     const gameOverText = document.querySelector('#game-Over-Text')
-    // const gameLostText = document.querySelector('#game-Lost-Text')
     const closingStoryText = document.querySelector('#closing-story-text')
     start.style.display = 'initial'
     game.style.display  = 'initial'
     message.style.display = 'initial'
     score.style.display = 'initial'
     healthText.style.display = 'initial'
-    // gameLostText.remove()
     gameOverText.remove()
     closingStoryText.remove()
     clearInterval(gameLoop)
-    // clearInterval(gameTimer)
     restart.style.display = 'none'
     start.innerText = 'Pause'
     start.style.justifyContent = 'center'
@@ -573,5 +551,13 @@ restart.addEventListener('click', (event) => {
     start.style.fontSize = '25px'
     start.style.marginTop = '50px'
     startGame()
+    shark.x = 50
+    shark.y = 280
+    alienRespawn()
+    alien2Respawn()
+    alien3Respawn()
+    asteroidRespawn()
+    asteroid2Respawn()
+    asteroid3Respawn()
     } 
 })
