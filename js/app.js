@@ -94,7 +94,7 @@ class playerCharacter {
     }
 }
 
-
+// why not make all the aliens one class ith a type value ?
 // object to define alien enemy type 1
 class enemyAlien1 {
     constructor(x, y, color, width, height) {
@@ -149,6 +149,7 @@ class enemyAlien3 {
     }
 }
 
+// make all the asteroids 1 class with a type value
 // object to define asteroid enemy type 1
 class enemyAsteroid1 {
     constructor(x, y, color, width, height) {
@@ -229,6 +230,7 @@ document.addEventListener('keyup', (e) => {
 
 // alien enemies automated movement
 const alienMovement = (alienEnemy) => {
+    // same as: if(gameStart) { ...}
     if (gameStart != false) {
         alienEnemy.x -= 50
     }
@@ -346,7 +348,7 @@ const asteroidHitDetection = (asteroid) => {
             healthStatus.innerText = decreaseHealth() - 20
         }
 }
-
+// dry this up by using arrays and array iteration methods
 // recurring in-game loop logic
 const gameLoop = () => {
     if (alien.alive) {
